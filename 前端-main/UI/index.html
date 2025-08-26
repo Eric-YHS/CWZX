@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>财闻智析 - 智能金融决策平台</title>
+    <!-- 引入 Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- 引入外部 CSS 文件 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            财闻智析
+        </div>
+        <div class="nav-links">
+            <a href="#features" class="text-white">功能特性</a>
+            <a href="#pricing" class="text-white ml-4">订阅计划</a>
+            <a href="#contact" class="text-white ml-4">联系我们</a>
+        </div>
+    </nav>
+
+    
+    
+    <!-- 核心功能入口 -->
+    <section class="hero-section">
+        <h1 class="text-3xl font-bold text-center">智能金融决策引擎</h1>
+        <p class="text-center mt-4">基于LLM+RAG技术的实时市场分析平台</p>
+        
+        <div class="analysis-input">
+            <div class="search-box">
+                <input type="text" placeholder="输入股票代码或基金名称（例：600519）">
+                <button class="cta-button">立即分析</button>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- 数据看板 -->
+    <section class="dashboard">
+        <h2 class="text-2xl font-bold text-center">实时市场情绪分析</h2>
+        <div class="chart-container" id="sentiment-chart">
+            <!-- ECharts图表将在这里渲染 -->
+        </div>
+    </section>
+
+        <!-- 当前行情模块 -->
+    <section class="market-section" id="market">
+        <h2 class="text-2xl font-bold text-center">当前行情</h2>
+        <div class="market-buttons">
+            <button class="market-button active" data-type="stocks">股票</button>
+            <button class="market-button" data-type="funds">基金</button>
+            <button class="market-button" data-type="forex">指数</button>
+        </div>
+        <div class="market-content" id="market-content">
+            <!-- 行情数据将通过 JavaScript 动态加载 -->
+            <p class="text-center">请选择上方的类型以查看行情数据</p>
+        </div>
+    </section>
+
+    <!-- 今日重大新闻模块 -->
+    <section class="news-ticker" id="news-ticker">
+        <h2 class="text-2xl font-bold text-center">今日重大新闻</h2>
+        <div class="ticker-container">
+            <ul id="news-list">
+                <!-- 新闻内容将通过 JavaScript 动态加载 -->
+            </ul>
+        </div>
+    </section>
+
+    <!-- 技术优势 -->
+    <section class="tech-features" id="features">
+        <div class="feature-card">
+            <i class="feature-icon fas fa-brain"></i>
+            <h3>深度优化的金融LLM</h3>
+            <p>专为金融场景训练的千亿参数模型，准确率提升40%</p>
+        </div>
+        
+        <div class="feature-card">
+            <i class="feature-icon fas fa-search-plus"></i>
+            <h3>RAG增强检索</h3>
+            <p>实时连接300+数据源，检索速度提升60%</p>
+        </div>
+        
+        <div class="feature-card">
+            <i class="feature-icon fas fa-robot"></i>
+            <h3>多智能体协作</h3>
+            <p>7大专业模块协同分析，覆盖全投资场景</p>
+        </div>
+    </section>
+
+    <!-- RAG知识库功能 -->
+    <section class="rag-section" id="rag-features">
+        <h2 class="text-2xl font-bold text-center">RAG知识库系统</h2>
+        <p class="text-center mt-2">基于检索增强生成的智能知识检索与可信度分析</p>
+        
+        <div class="rag-container">
+            <!-- 知识检索 -->
+            <div class="rag-card">
+                <h3><i class="fas fa-search"></i> 知识检索</h3>
+                <div class="rag-search">
+                    <input type="text" id="rag-search-input" placeholder="输入关键词检索相关知识...">
+                    <button onclick="performRAGSearch()">检索</button>
+                </div>
+                <div id="rag-search-results" class="rag-results">
+                    <!-- 检索结果将显示在这里 -->
+                </div>
+            </div>
+            
+            <!-- 可信度分析 -->
+            <div class="rag-card">
+                <h3><i class="fas fa-shield-alt"></i> 可信度分析</h3>
+                <div class="rag-analyze">
+                    <textarea id="rag-analyze-input" placeholder="输入要分析的内容..." rows="4"></textarea>
+                    <button onclick="performRAGAnalyze()">分析可信度</button>
+                </div>
+                <div id="rag-analyze-results" class="rag-results">
+                    <!-- 分析结果将显示在这里 -->
+                </div>
+            </div>
+            
+            <!-- 知识库统计 -->
+            <div class="rag-card">
+                <h3><i class="fas fa-chart-bar"></i> 知识库统计</h3>
+                <div id="rag-stats" class="rag-stats">
+                    <p>加载中...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 订阅计划 -->
+    <section class="pricing-table" id="pricing">
+        <div class="price-card">
+            <h3>基础版</h3>
+            <div class="price">¥29<span>/月</span></div>
+            <ul class="features-list">
+                <li>实时新闻解读</li>
+                <li>基础财报分析</li>
+                <li>每日3次智能查询</li>
+            </ul>
+        </div>
+        
+        <div class="price-card featured">
+            <h3>专业版</h3>
+            <div class="price">¥89<span>/月</span></div>
+            <ul class="features-list">
+                <li>深度行业报告</li>
+                <li>自媒体可信度评估</li>
+                <li>API访问权限</li>
+            </ul>
+        </div>
+        
+        <div class="price-card">
+            <h3>企业定制</h3>
+            <div class="price">定制报价</div>
+            <ul class="features-list">
+                <li>私有化部署</li>
+                <li>专属数据源接入</li>
+                <li>VIP技术支持</li>
+            </ul>
+        </div>
+    </section>
+
+        <!-- AI助手悬浮按钮 -->
+    <div class="floating-button" id="floating-button">
+        <i class="fas fa-comments"></i>
+    </div>
+    
+    <!-- AI助手悬浮窗口 -->
+    <div class="ai-window" id="ai-window">
+        <div class="ai-header">
+            <h3>AI助手</h3>
+            <button class="clear-button" id="clear-button">清除</button>
+            <button class="close-button" id="close-button">&times;</button> 
+        </div>
+        <div class="ai-content">
+            <div class="chat-log" id="chat-log">
+                <!-- 聊天记录将动态加载 -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chat-input" placeholder="请输入您的问题...">
+                <button id="send-button">发送</button>
+            </div>
+        </div>
+        <!-- 拖动调整大小的区域 -->
+        <div class="resize-handle" id="resize-handle"></div>
+    </div>
+    
+
+    <!-- 引入ECharts图表库 -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <!-- 引入marked.js用于Markdown渲染 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- 引入外部 JS 文件 -->
+    <script src="script.js" defer></script>
+</body>
+</html>

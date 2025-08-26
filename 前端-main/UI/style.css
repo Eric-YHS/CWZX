@@ -1,0 +1,750 @@
+/* 全局样式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 导航栏样式 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: #007bff;
+    color: white;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .nav-links a {
+    margin-left: 1rem;
+    font-size: 1rem;
+    color: white;
+}
+
+/* 核心功能入口 */
+.hero-section {
+    text-align: center;
+    padding: 4rem 5%;
+    background-color: #007bff;
+    color: white;
+}
+
+.hero-section .analysis-input {
+    margin-top: 2rem;
+}
+
+.hero-section .search-box {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.hero-section .search-box input {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.hero-section .search-box .cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hero-section .search-box .cta-button:hover {
+    background-color: #003d80;
+}
+
+/* 技术优势 */
+.tech-features {
+    display: flex;
+    justify-content: space-around;
+    padding: 4rem 5%;
+    background-color: #f1f1f1;
+}
+
+.tech-features .feature-card {
+    text-align: center;
+    max-width: 300px;
+}
+
+.tech-features .feature-icon {
+    font-size: 3rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+/* 数据看板 */
+.dashboard {
+    padding: 4rem 5%;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.dashboard .chart-container {
+    width: 100%;
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* 今日重大新闻模块 */
+.news-ticker {
+    padding: 2rem 5%;
+    background-color: #f1f1f1;
+    text-align: center;
+}
+
+.news-ticker .ticker-container {
+    overflow: hidden;
+    height: 50px;
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.news-ticker #news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    animation: scroll-news 10s linear infinite;
+}
+
+.news-ticker #news-list li {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #333;
+    white-space: nowrap;
+}
+
+@keyframes scroll-news {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+/* 订阅计划 */
+.pricing-table {
+    display: flex;
+    justify-content: space-around;
+    padding: 4rem 5%;
+    background-color: #ffffff;
+}
+
+.pricing-table .price-card {
+    text-align: center;
+    max-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 2rem;
+    background-color: #f9f9f9;
+}
+
+.pricing-table .price-card.featured {
+    border-color: #007bff;
+    background-color: #e6f0ff;
+}
+
+.pricing-table .price {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.pricing-table .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/* 当前行情模块 */
+.market-section {
+    padding: 4rem 5%;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.market-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.market-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.market-button:hover {
+    background-color: #0056b3;
+}
+
+.market-button.active {
+    background-color: #0056b3;
+}
+
+.market-content {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    min-height: 150px;
+}
+/* 悬浮按钮样式 */
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+.floating-button:hover {
+    background-color: #0056b3;
+}
+
+.floating-button i {
+    font-size: 1.5rem;
+}
+
+/* AI助手窗口样式 */
+.ai-window {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    overflow: hidden; /* 防止内容溢出 */
+    resize: none; /* 禁用默认的浏览器调整大小 */
+}
+.resize-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    background: transparent;
+    cursor: nwse-resize;
+    z-index: 1001;
+}
+
+/* 为调整手柄添加视觉提示 */
+.resize-handle::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    border-left: 2px solid #ffffff;
+    border-top: 2px solid #ffffff;
+}
+.ai-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden; /* 防止内容溢出 */
+    
+}
+
+.ai-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.ai-header .close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.ai-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chat-log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-log .message {
+    margin-bottom: 10px;
+}
+
+.chat-log .message.user {
+    text-align: right;
+    color: #007bff;
+}
+
+.chat-log .message.ai {
+    text-align: left;
+    color: #333;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.chat-input button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+/* 聊天记录样式 */
+.chat-log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column; /* 确保消息按列排列 */
+    gap: 10px; /* 消息之间的间距 */
+}
+
+.chat-log .message {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    display: inline-block;
+    max-width: 70%; /* 限制气泡最大宽度 */
+    box-sizing: border-box; /* 确保内边距和宽度计算正确 */
+}
+
+.chat-log .message.user {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end; /* 将用户消息气泡右对齐 */
+    margin-left: auto; /* 推动气泡到右侧 */
+    text-align: left; /* 文字右对齐 */
+}
+
+.chat-log .message.ai {
+    background-color: #e9ecef;
+    color: #333;
+    align-self: flex-start; /* 将AI消息气泡左对齐 */
+    margin-right: auto; /* 推动气泡到左侧 */
+    text-align: left; /* 文字左对齐 */
+}
+
+/* 清除聊天记录按钮样式 */
+.clear-button {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.clear-button:hover {
+    background-color: white;
+    color: #007bff;
+}
+
+/* 新闻滚动样式 */
+.news-ticker {
+    background-color: #f8f9fa;
+    padding: 20px 5%;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.news-ticker h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.ticker-container {
+    height: 30px;
+    overflow: hidden;
+    position: relative;
+    background: white;
+    border-radius: 15px;
+    padding: 0 20px;
+}
+
+#news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+}
+
+#news-list li {
+    height: 30px;
+    line-height: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 10px;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+/* RAG功能样式 */
+.rag-section {
+    padding: 4rem 5%;
+    background: #f8f9fa;
+}
+
+.rag-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.rag-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-left: 4px solid #FFD700;
+}
+
+.rag-card h3 {
+    color: #2A4F6E;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rag-card h3 i {
+    color: #FFD700;
+}
+
+.rag-search, .rag-analyze {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.rag-search input, .rag-analyze textarea {
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.rag-search input:focus, .rag-analyze textarea:focus {
+    outline: none;
+    border-color: #FFD700;
+}
+
+.rag-search button, .rag-analyze button {
+    background: #2A4F6E;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.rag-search button:hover, .rag-analyze button:hover {
+    background: #1A365F;
+}
+
+.rag-results {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #f8f9fa;
+}
+
+.rag-result-item {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.rag-result-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.rag-result-title {
+    font-weight: bold;
+    color: #2A4F6E;
+    margin-bottom: 0.25rem;
+}
+
+.rag-result-meta {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.rag-result-content {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #333;
+}
+
+.rag-stats {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.rag-stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.rag-stat-item:last-child {
+    border-bottom: none;
+}
+
+.rag-stat-label {
+    font-weight: 600;
+    color: #2A4F6E;
+}
+
+.rag-stat-value {
+    color: #333;
+}
+
+/* 可信度分析结果样式 */
+.credibility-score {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+.credibility-high {
+    background: #d4edda;
+    color: #155724;
+}
+
+.credibility-medium {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.credibility-low {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.evidence-item {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background: white;
+    border-radius: 6px;
+    border-left: 3px solid #FFD700;
+}
+
+#news-list li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Markdown样式 */
+.message.ai h1, .message.ai h2, .message.ai h3, .message.ai h4, .message.ai h5, .message.ai h6 {
+    margin: 0.5em 0 0.3em 0;
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+.message.ai h1 { font-size: 1.5em; }
+.message.ai h2 { font-size: 1.3em; }
+.message.ai h3 { font-size: 1.2em; }
+.message.ai h4 { font-size: 1.1em; }
+
+.message.ai p {
+    margin: 0.3em 0;
+    line-height: 1.5;
+}
+
+.message.ai ul, .message.ai ol {
+    margin: 0.3em 0;
+    padding-left: 1.5em;
+}
+
+.message.ai li {
+    margin: 0.2em 0;
+}
+
+.message.ai blockquote {
+    margin: 0.5em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #ccc;
+    background-color: rgba(0,0,0,0.05);
+    font-style: italic;
+}
+
+.message.ai pre {
+    margin: 0.5em 0;
+    padding: 0.8em;
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.85em;
+    line-height: 1.4;
+}
+
+.message.ai pre code {
+    background-color: transparent;
+    padding: 0;
+    color: inherit;
+}
+
+.message.ai code:not(pre code) {
+    background-color: rgba(0,0,0,0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9em;
+    color: #e83e8c;
+}
+
+.message.ai strong {
+    font-weight: bold;
+    color: #000;
+}
+
+.message.ai em {
+    font-style: italic;
+}
+
+.message.ai hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+}
+
+.message.ai table {
+    border-collapse: collapse;
+    margin: 0.5em 0;
+    width: 100%;
+    font-size: 0.9em;
+}
+
+.message.ai th, .message.ai td {
+    border: 1px solid #ddd;
+    padding: 0.5em;
+    text-align: left;
+}
+
+.message.ai th {
+    background-color: rgba(0,0,0,0.1);
+    font-weight: bold;
+}
+
+.message.ai a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.message.ai a:hover {
+    color: #0056b3;
+}

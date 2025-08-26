@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试修复</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div id="chart" style="width: 800px; height: 400px;"></div>
+    
+    <script>
+        // 测试修复后的代码
+        const shIndex = { current_price: null, change_percent: 3.23 }; // 模拟API返回的null值
+        
+        // 生成模拟的日内走势数据（基于当前涨跌幅）
+        const timePoints = ['09:30', '10:30', '11:30', '14:00', '15:00'];
+        // 使用默认基准指数3000点，如果current_price为null的话
+        const baseIndex = shIndex && shIndex.current_price ? parseFloat(shIndex.current_price) : 3000;
+        const baseChange = shIndex && shIndex.change_percent ? parseFloat(shIndex.change_percent) : 0;
+        
+        console.log('baseIndex:', baseIndex); // 应该显示3000而不是NaN
+        console.log('baseChange:', baseChange); // 应该显示3.23
+        
+        // 生成指数走势数据
+        const indexData = timePoints.map((time, index) => {
+            const progress = index / (timePoints.length - 1);
+            const fluctuation = Math.sin(progress * Math.PI) * baseChange * 0.5 + (Math.random() - 0.5) * 10;
+            return Math.round(baseIndex * (1 + baseChange / 100 * progress) + fluctuation);
+        });
+        
+        console.log('indexData:', indexData); // 应该显示有效的数字数组
+        
+        // 显示图表
+        const chartDom = document.getElementById('chart');
+        const myChart = echarts.init(chartDom);
+        
+        const option = {
+            title: {
+                text: '上证指数走势测试 (当前涨跌幅: ' + baseChange + '%)',
+                left: 'center'
+            },
+            xAxis: {
+                type: 'category',
+                data: timePoints
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: indexData,
+                type: 'line'
+            }]
+        };
+        
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

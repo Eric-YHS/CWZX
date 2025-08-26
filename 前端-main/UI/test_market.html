@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试实时市场情绪分析</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>测试实时市场情绪分析</h1>
+    
+    <div id="sentiment-chart" class="chart-container"></div>
+    
+    <script>
+        console.log('页面开始加载...');
+        
+        // 数据服务模块
+        const DataService = {
+            baseURL: 'http://localhost:8000/api/v1',
+            
+            async getIndicesList() {
+                try {
+                    console.log('正在获取指数数据...');
+                    const response = await fetch(`${this.baseURL}/stocks/indices/list`);
+                    if (!response.ok) throw new Error('获取指数数据失败');
+                    const data = await response.json();
+                    console.log('指数数据获取成功:', data);
+                    return data;
+                } catch (error) {
+                    console.error('获取指数数据错误:', error);
+                    return [];
+                }
+            },
+            
+            async searchStocks(keyword, limit = 50) {
+                try {
+                    console.log('正在搜索股票...');
+                    const response = await fetch(`${this.baseURL}/stocks/search?keyword=&limit=${limit}`);
+                    if (!response.ok) throw new Error('搜索股票失败');
+                    const data = await response.json();
+                    console.log('股票数据获取成功，数量:', data.length);
+                    return data;
+                } catch (error) {
+                    console.error('搜索股票错误:', error);
+                    return [];
+                }
+            }
+        };
+        
+        // 市场分析图表
+        async function initSentimentChart() {
+            console.log('开始初始化图表...');
+            
+            // 检查ECharts
+            if (typeof echarts === 'undefined') {
+                console.error('ECharts 未加载');
+                return;
+            }
+            console.log('ECharts 已加载');
+            
+            const chartDom = document.getElementById('sentiment-chart');
+            if (!chartDom) {
+                console.error('找不到图表容器');
+                return;
+            }
+            console.log('找到图表容器');
+            
+            try {
+                const myChart = echarts.init(chartDom);
+                console.log('ECharts 实例创建成功');
+                
+                // 获取数据
+                const indices = await DataService.getIndicesList();
+                const stocks = await DataService.searchStocks('', 50);
+                
+                console.log('indices:', indices);
+                console.log('stocks length:', stocks.length);
+                
+                // 如果没有数据，使用模拟数据
+                const shIndex = indices.find(idx => idx.code === '000001') || { price: 3000, change: '+1.0%' };
+                
+                const upCount = stocks.filter(s => s.change_percent > 0).length;
+                const downCount = stocks.filter(s => s.change_percent < 0).length;
+                const flatCount = stocks.filter(s => !s.change_percent || s.change_percent === 0).length;
+                
+                console.log('涨跌分布 - 上涨:', upCount, '下跌:', downCount, '平盘:', flatCount);
+                
+                const timePoints = ['09:30', '10:30', '11:30', '14:00', '15:00'];
+                const baseIndex = parseFloat(shIndex.price);
+                const baseChange = parseFloat(shIndex.change.replace('%', ''));
+                
+                const indexData = timePoints.map((time, index) => {
+                    const progress = index / (timePoints.length - 1);
+                    return Math.round(baseIndex * (1 + baseChange/100 * progress) + (Math.random() - 0.5) * 20);
+                });
+                
+                const option = {
+                    title: {
+                        text: '市场走势分析 (基于实时数据)',
+                        subtext: `更新时间: ${new Date().toLocaleTimeString('zh-CN')}`,
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['上证指数', '涨跌分布'],
+                        top: '30'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '20%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: timePoints
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: '指数点位'
+                    },
+                    series: [
+                        {
+                            name: '上证指数',
+                            type: 'line',
+                            smooth: true,
+                            data: indexData,
+                            itemStyle: { color: '#5470c6' },
+                            areaStyle: { opacity: 0.3 }
+                        },
+                        {
+                            name: '涨跌分布',
+                            type: 'pie',
+                            radius: '25%',
+                            center: ['80%', '30%'],
+                            data: [
+                                {value: upCount, name: '上涨'},
+                                {value: downCount, name: '下跌'},
+                                {value: flatCount, name: '平盘'}
+                            ],
+                            label: {
+                                show: true,
+                                formatter: '{b}: {c} ({d}%)'
+                            }
+                        }
+                    ]
+                };
+                
+                myChart.setOption(option);
+                console.log('图表设置完成');
+                
+            } catch (error) {
+                console.error('初始化图表失败:', error);
+                document.getElementById('sentiment-chart').innerHTML = 
+                    '<div style="color: red; padding: 20px;">错误: ' + error.message + '</div>';
+            }
+        }
+        
+        // 页面加载后初始化
+        window.addEventListener('load', () => {
+            console.log('window loaded');
+            setTimeout(initSentimentChart, 100);
+        });
+    </script>
+</body>
+</html>

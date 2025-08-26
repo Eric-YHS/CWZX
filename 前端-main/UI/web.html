@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>财闻智析 - 智能金融决策平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary-blue: #2A4F6E;
+            --accent-gold: #FFD700;
+            --bg-gray: #F5F7FA;
+            --text-dark: #2C3E50;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            background: var(--bg-gray);
+            color: var(--text-dark);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--primary-blue);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: var(--accent-gold);
+            margin-right: 8px;
+        }
+
+        /* 核心功能展示区 */
+        .hero-section {
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1A365F 100%);
+            color: white;
+        }
+
+        .analysis-input {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .cta-button {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        /* 技术优势模块 */
+        .tech-features {
+            padding: 4rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-gold);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        /* 数据可视化模块 */
+        .dashboard {
+            padding: 4rem 5%;
+            background: white;
+        }
+
+        .chart-container {
+            height: 400px;
+            background: var(--bg-gray);
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        /* 订阅计划 */
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 2rem 5%;
+        }
+
+        .price-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #eee;
+        }
+
+        .price-card:hover {
+            border-color: var(--accent-gold);
+        }
+
+        @media (max-width: 768px) {
+            .pricing-table {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            财闻智析
+        </div>
+        <div class="nav-links">
+            <a href="#features" class="text-white">功能特性</a>
+            <a href="#pricing" class="text-white ml-4">订阅计划</a>
+            <a href="#contact" class="text-white ml-4">联系我们</a>
+        </div>
+    </nav>
+
+    <!-- 核心功能入口 -->
+    <section class="hero-section">
+        <h1 class="text-3xl font-bold text-center">智能金融决策引擎</h1>
+        <p class="text-center mt-4">基于LLM+RAG技术的实时市场分析平台</p>
+        
+        <div class="analysis-input">
+            <div class="search-box">
+                <input type="text" placeholder="输入股票代码或基金名称（例：600519）">
+                <button class="cta-button">立即分析</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术优势 -->
+    <section class="tech-features" id="features">
+        <div class="feature-card">
+            <i class="feature-icon fas fa-brain"></i>
+            <h3>深度优化的金融LLM</h3>
+            <p>专为金融场景训练的千亿参数模型，准确率提升40%</p>
+        </div>
+        
+        <div class="feature-card">
+            <i class="feature-icon fas fa-search-plus"></i>
+            <h3>RAG增强检索</h3>
+            <p>实时连接300+数据源，检索速度提升60%</p>
+        </div>
+        
+        <div class="feature-card">
+            <i class="feature-icon fas fa-robot"></i>
+            <h3>多智能体协作</h3>
+            <p>7大专业模块协同分析，覆盖全投资场景</p>
+        </div>
+    </section>
+
+    <!-- 数据看板 -->
+    <section class="dashboard">
+        <h2 class="text-2xl font-bold text-center">市场热点分析</h2>
+        <div class="chart-container" id="sentiment-chart">
+            <!-- ECharts图表将在这里渲染 -->
+        </div>
+    </section>
+
+    <!-- 订阅计划 -->
+    <section class="pricing-table" id="pricing">
+        <div class="price-card">
+            <h3>基础版</h3>
+            <div class="price">¥299<span>/月</span></div>
+            <ul class="features-list">
+                <li>实时新闻解读</li>
+                <li>基础财报分析</li>
+                <li>每日3次智能查询</li>
+            </ul>
+        </div>
+        
+        <div class="price-card featured">
+            <h3>专业版</h3>
+            <div class="price">¥899<span>/月</span></div>
+            <ul class="features-list">
+                <li>深度行业报告</li>
+                <li>自媒体可信度评估</li>
+                <li>API访问权限</li>
+            </ul>
+        </div>
+        
+        <div class="price-card">
+            <h3>企业定制</h3>
+            <div class="price">定制报价</div>
+            <ul class="features-list">
+                <li>私有化部署</li>
+                <li>专属数据源接入</li>
+                <li>VIP技术支持</li>
+            </ul>
+        </div>
+    </section>
+
+    <script>
+        // 数据服务模块
+        const DataService = {
+            baseURL: 'http://localhost:8000/api/v1',
+            
+            async getIndicesList() {
+                try {
+                    const response = await fetch(`${this.baseURL}/stocks/indices/list`);
+                    if (!response.ok) throw new Error('获取指数数据失败');
+                    return await response.json();
+                } catch (error) {
+                    console.error('获取指数数据错误:', error);
+                    return [];
+                }
+            },
+            
+            async getHotStocks() {
+                try {
+                    const response = await fetch(`${this.baseURL}/stocks/hot/list`);
+                    if (!response.ok) throw new Error('获取热门股票失败');
+                    return await response.json();
+                } catch (error) {
+                    console.error('获取热门股票错误:', error);
+                    return [];
+                }
+            },
+            
+            async getIndustryDistribution() {
+                try {
+                    const response = await fetch(`${this.baseURL}/stocks/industry/distribution`);
+                    if (!response.ok) throw new Error('获取行业分布失败');
+                    return await response.json();
+                } catch (error) {
+                    console.error('获取行业分布错误:', error);
+                    return [];
+                }
+            },
+            
+            async searchStocks(keyword, limit = 50) {
+                try {
+                    const response = await fetch(`${this.baseURL}/stocks/search?keyword=&limit=${limit}`);
+                    if (!response.ok) throw new Error('搜索股票失败');
+                    return await response.json();
+                } catch (error) {
+                    console.error('搜索股票错误:', error);
+                    return [];
+                }
+            }
+        };
+        
+        // 市场热点分析图表
+        async function initSentimentChart() {
+            // 确保ECharts已加载
+            if (typeof echarts === 'undefined') {
+                console.error('ECharts 未加载');
+                return;
+            }
+            
+            const chartDom = document.getElementById('sentiment-chart');
+            if (!chartDom) {
+                console.error('找不到图表容器');
+                return;
+            }
+            
+            const myChart = echarts.init(chartDom);
+            
+            // 显示加载中
+            chartDom.innerHTML = '<div style="padding: 20px; text-align: center;">正在加载市场数据...</div>';
+            
+            try {
+                // 并行获取所有数据
+                const [indices, hotStocks, industryData] = await Promise.all([
+                    DataService.getIndicesList(),
+                    DataService.getHotStocks(),
+                    DataService.getIndustryDistribution()
+                ]);
+                
+                console.log('获取到的指数数据:', indices);
+                console.log('获取到的热门股票:', hotStocks);
+                console.log('获取到的行业分布:', industryData);
+                
+                // 处理热门股票数据
+                const stockNames = hotStocks.slice(0, 8).map(s => s.name);
+                const stockVolumes = hotStocks.slice(0, 8).map(s => s.volume || 0);
+                const stockChanges = hotStocks.slice(0, 8).map(s => {
+                    const change = s.change;
+                    return change ? parseFloat(change.replace('%', '')) : 0;
+                });
+                
+                // 使用上证指数走势
+                const shIndex = indices.find(idx => idx.code === '000001');
+                const timePoints = ['09:30', '10:30', '11:30', '14:00', '15:00'];
+                const baseIndex = shIndex ? parseFloat(shIndex.price) : 3000;
+                
+                // 生成指数走势
+                const indexTrend = timePoints.map((time, index) => {
+                    const progress = index / (timePoints.length - 1);
+                    return baseIndex + Math.sin(progress * Math.PI) * 50 + (Math.random() - 0.5) * 20;
+                });
+                
+                const option = {
+                    title: {
+                        text: '市场热点分析 (基于baostock实时数据)',
+                        subtext: `更新时间: ${new Date().toLocaleTimeString('zh-CN')}`,
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: ['热门股票成交量', '涨跌幅', '上证指数', '行业分布'],
+                        top: '8%',
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    grid: [
+                        {
+                            left: '3%',
+                            right: '52%',
+                            top: '18%',
+                            bottom: '55%',
+                            containLabel: true
+                        },
+                        {
+                            left: '3%',
+                            right: '52%',
+                            top: '55%',
+                            bottom: '3%',
+                            containLabel: true
+                        }
+                    ],
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: stockNames,
+                            gridIndex: 0,
+                            axisLabel: {
+                                rotate: 45,
+                                fontSize: 10
+                            }
+                        },
+                        {
+                            type: 'category',
+                            data: timePoints,
+                            gridIndex: 1
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: '成交量',
+                            gridIndex: 0,
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        {
+                            type: 'value',
+                            name: '涨跌幅(%)',
+                            gridIndex: 0,
+                            axisLabel: {
+                                formatter: '{value}%'
+                            }
+                        },
+                        {
+                            type: 'value',
+                            name: '指数点位',
+                            gridIndex: 1
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '热门股票成交量',
+                            type: 'bar',
+                            xAxisIndex: 0,
+                            yAxisIndex: 0,
+                            data: stockVolumes,
+                            itemStyle: {
+                                color: '#5470c6'
+                            }
+                        },
+                        {
+                            name: '涨跌幅',
+                            type: 'line',
+                            xAxisIndex: 0,
+                            yAxisIndex: 1,
+                            data: stockChanges,
+                            itemStyle: {
+                                color: function(params) {
+                                    return params.value >= 0 ? '#ee6666' : '#5470c6';
+                                }
+                            },
+                            label: {
+                                show: true,
+                                position: 'top',
+                                formatter: '{c}%'
+                            }
+                        },
+                        {
+                            name: '上证指数',
+                            type: 'line',
+                            xAxisIndex: 1,
+                            yAxisIndex: 2,
+                            data: indexTrend,
+                            smooth: true,
+                            itemStyle: {
+                                color: '#91cc75'
+                            },
+                            areaStyle: {
+                                opacity: 0.3
+                            }
+                        },
+                        {
+                            name: '行业分布',
+                            type: 'pie',
+                            radius: ['20%', '35%'],
+                            center: ['78%', '30%'],
+                            data: industryData.slice(0, 6).map(item => ({
+                                name: item.name,
+                                value: item.value
+                            })),
+                            label: {
+                                show: true,
+                                formatter: '{b}: {d}%'
+                            },
+                            itemStyle: {
+                                color: function(params) {
+                                    const colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272'];
+                                    return colors[params.dataIndex % colors.length];
+                                }
+                            }
+                        }
+                    ]
+                };
+                
+                // 清除加载提示并显示图表
+                chartDom.innerHTML = '';
+                myChart.setOption(option);
+                
+                console.log('市场热点分析图表初始化成功');
+                
+                // 响应式调整
+                window.addEventListener('resize', () => {
+                    myChart.resize();
+                });
+                
+            } catch (error) {
+                console.error('初始化市场热点分析图表失败:', error);
+                chartDom.innerHTML = '<div style="color: red; padding: 20px; text-align: center;">加载失败，请检查控制台错误</div>';
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log('页面加载完成，开始初始化图表...');
+            initSentimentChart();
+        });
+    </script>
+</body>
+</html>

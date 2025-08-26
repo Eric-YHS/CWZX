@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后端API测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .test-button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>财闻智析 - 后端API测试</h1>
+    
+    <div class="test-section">
+        <h2>基础连接测试</h2>
+        <button class="test-button" onclick="testHealth()">健康检查</button>
+        <button class="test-button" onclick="testRoot()">根路径测试</button>
+        <div id="basic-result" class="result">点击按钮开始测试...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>股票数据测试</h2>
+        <button class="test-button" onclick="testStockSearch()">股票搜索</button>
+        <button class="test-button" onclick="testMarketOverview()">市场概览</button>
+        <button class="test-button" onclick="testStockInfo()">股票信息(600519)</button>
+        <div id="stock-result" class="result">点击按钮开始测试...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>新闻数据测试</h2>
+        <button class="test-button" onclick="testLatestNews()">最新新闻</button>
+        <div id="news-result" class="result">点击按钮开始测试...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>AI聊天测试</h2>
+        <button class="test-button" onclick="testChat()">聊天测试</button>
+        <div id="chat-result" class="result">点击按钮开始测试...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>综合测试</h2>
+        <button class="test-button" onclick="testAll()">运行所有测试</button>
+        <div id="all-result" class="result">点击按钮开始测试...</div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        
+        function updateResult(elementId, content, isSuccess = true) {
+            const element = document.getElementById(elementId);
+            element.textContent = content;
+            element.className = isSuccess ? 'result success' : 'result error';
+        }
+        
+        async function testHealth() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                updateResult('basic-result', `✅ 健康检查成功\n响应: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                updateResult('basic-result', `❌ 健康检查失败\n错误: ${error.message}`, false);
+            }
+        }
+        
+        async function testRoot() {
+            try {
+                const response = await fetch(`${API_BASE}/`);
+                const data = await response.json();
+                updateResult('basic-result', `✅ 根路径测试成功\n响应: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                updateResult('basic-result', `❌ 根路径测试失败\n错误: ${error.message}`, false);
+            }
+        }
+        
+        async function testStockSearch() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/stocks/search?keyword=平安&limit=3`);
+                const data = await response.json();
+                updateResult('stock-result', `✅ 股票搜索成功\n找到 ${data.length} 条结果\n响应: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                updateResult('stock-result', `❌ 股票搜索失败\n错误: ${error.message}`, false);
+            }
+        }
+        
+        async function testMarketOverview() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/stocks/market/overview`);
+                const data = await response.json();
+                updateResult('stock-result', `✅ 市场概览成功\n响应: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                updateResult('stock-result', `❌ 市场概览失败\n错误: ${error.message}`, false);
+            }
+        }
+        
+        async function testStockInfo() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/stocks/600519`);
+                const data = await response.json();
+                updateResult('stock-result', `✅ 股票信息获取成功\n响应: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                updateResult('stock-result', `❌ 股票信息获取失败\n错误: ${error.message}`, false);
+            }
+        }
+        
+        async function testLatestNews() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/news/latest?limit=3`);
+                const data = await response.json();
+                updateResult('news-result', `✅ 最新新闻获取成功\n找到 ${data.length} 条新闻\n响应: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                updateResult('news-result', `❌ 最新新闻获取失败\n错误: ${error.message}`, false);
+            }
+        }
+        
+        async function testChat() {
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/chat/message`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: '你好，请简单介绍一下自己'
+                    })
+                });
+                const data = await response.json();
+                updateResult('chat-result', `✅ AI聊天测试成功\n响应: ${JSON.stringify(data, null, 2)}`, true);
+            } catch (error) {
+                updateResult('chat-result', `❌ AI聊天测试失败\n错误: ${error.message}`, false);
+            }
+        }
+        
+        async function testAll() {
+            const allResult = document.getElementById('all-result');
+            allResult.textContent = '正在运行所有测试...';
+            allResult.className = 'result';
+            
+            const tests = [
+                { name: '健康检查', fn: () => fetch(`${API_BASE}/health`) },
+                { name: '股票搜索', fn: () => fetch(`${API_BASE}/api/v1/stocks/search?keyword=&limit=3`) },
+                { name: '市场概览', fn: () => fetch(`${API_BASE}/api/v1/stocks/market/overview`) },
+                { name: '最新新闻', fn: () => fetch(`${API_BASE}/api/v1/news/latest?limit=3`) },
+                { name: 'AI聊天', fn: () => fetch(`${API_BASE}/api/v1/chat/message`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: '测试' })
+                })}
+
+            ];
+            
+            let results = [];
+            let passCount = 0;
+            
+            for (const test of tests) {
+                try {
+                    const response = await test.fn();
+                    if (response.ok) {
+                        results.push(`✅ ${test.name}: 通过`);
+                        passCount++;
+                    } else {
+                        results.push(`❌ ${test.name}: HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    results.push(`❌ ${test.name}: ${error.message}`);
+                }
+            }
+            
+            const summary = `测试完成: ${passCount}/${tests.length} 项通过\n\n${results.join('\n')}`;
+            updateResult('all-result', summary, passCount === tests.length);
+        }
+        
+        // 页面加载后自动运行基础测试
+        window.addEventListener('load', () => {
+            setTimeout(testHealth, 1000);
+        });
+
+    </script>
+</body>
+
+</html>

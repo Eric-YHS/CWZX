@@ -1,0 +1,140 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+log/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache
+*.pkl
+*.pickle
+cache/
+__pycache__/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# RAG数据集（部分大文件）
+RAG_datasets/archive/Fake.csv
+RAG_datasets/archive/True.csv
+RAG_datasets/cache/rag_cache.pkl
+services/RAG_datasets/cache/rag_cache.pkl
+
+# 前端构建文件
+frontend/dist/
+frontend/node_modules/
+frontend/.output/
+frontend/.nuxt/
+
+# 其他
+server.log
+cwzx.db
+backend/cwzx.db
+
+# Elasticsearch数据（如果有）
+elasticsearch/data/
+
+# 模型文件（如果有）
+models/
+*.pt
+*.pth
+*.onnx
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.env.local
+.env.*.local
+
+# Redis database files
+dump.rdb
