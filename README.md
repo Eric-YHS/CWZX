@@ -106,37 +106,42 @@
 ## 🛠️ 技术架构
 
 ### 后端技术栈
-- **Web框架**: FastAPI
+仓库里目前有两套后端入口：
+
+- **Flask 单体（默认入口）**：`complete_start.py`，同时提供 REST 接口（`/api`）与前端静态页面，
+  监听 8000 端口；`start_app.py` 是它的一键启动器（自动装 Flask 依赖）。
+- **FastAPI 模块化版本**：`backend/main.py`（uvicorn），路由在 `backend/api/routes/`（stocks / news /
+  analysis / chat）与 `backend/api/rag_api.py`，服务层在 `backend/services/`。
+  它使用相对导入（`from api.routes import ...`），需要在 `backend/` 目录下启动：
+  `cd backend && uvicorn main:app --reload --port 8000`
 - **数据库**: SQLite + SQLAlchemy
-- **搜索引擎**: ElasticSearch
-- **AI服务**: 智谱AI GLM-4.5
-- **数据源**: 
-  - 腾讯股票API
-  - 新浪财经API
-  - 东方财富API
-  - BaoStock
+- **AI服务**: 智谱AI GLM（可选 OpenAI / 通义千文 / 文心一言 / 讯飞星火）
+- **数据源**: 腾讯股票 API、新浪财经 API、东方财富 API、BaoStock
+- **检索**: `RAG_datasets/` 下的本地 JSON 知识库（`services/rag_service.py`）；
+  `backend/services/elasticsearch_service.py` 是预留的 Elasticsearch 接入，目前还没有被其它模块调用
 
 ### 前端技术栈
-- **框架**: Vue.js 3
-- **UI组件**: Element Plus
-- **图表库**: ECharts
-- **HTTP客户端**: Axios
+`前端-main/UI/` 下的纯静态页面，没有构建步骤：
+- **页面**: 原生 HTML / CSS / JavaScript（`index.html` + `script.js`）
+- **图表库**: ECharts（CDN）
+- **Markdown 渲染**: marked（CDN）
+- **图标**: Font Awesome（CDN）
 
 ### 部署架构
 ```
-前端 (Vue.js) ↔ 后端API (FastAPI) ↔ 数据层 (SQLite/ElasticSearch)
-                     ↕
-                   AI服务 (智谱AI)
-                     ↕
-                   外部API (股票/新闻数据源)
+浏览器 (静态页面 + ECharts) ↔ Flask :8000 (/api + 静态资源) ↔ 数据层 (SQLite + 本地 RAG 知识库)
+                                  ↕
+                          AI 服务（智谱AI 等）
+                                  ↕
+                          外部 API（股票/新闻数据源）
 ```
 
 ## 📦 安装与使用
 
 ### 环境要求
 - Python 3.8+
-- Node.js 16+
-- ElasticSearch 7.x+
+- 无需 Node.js（前端是静态页面，不需要打包）
+- ElasticSearch 可选（预留模块，不装不影响启动）
 
 ### 快速启动
 
@@ -148,13 +153,11 @@ cd CWZX
 
 2. **安装依赖**
 ```bash
-# 后端依赖
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
-
-# 前端依赖
-cd frontend
-npm install
 ```
+
+> 前端是 `前端-main/UI` 下的静态页面（index.html + script.js），由后端 Flask 直接托管，
+> 不需要单独 `npm install`。
 
 3. **配置环境变量**
 ```bash
@@ -164,18 +167,16 @@ cp .env.example .env
 
 4. **启动服务**
 ```bash
-# 一键启动
+# 一键启动（会自动检查并安装 Flask 依赖）
 python start_app.py
 
-# 或分别启动
-python backend/complete_start.py
-cd frontend && npm run dev
+# 或者直接跑主程序
+python complete_start.py
 ```
 
 5. **访问应用**
-- 前端界面: http://localhost:3000
-- 后端API: http://localhost:8000
-- API文档: http://localhost:8000/docs
+- 前端界面: http://localhost:8000
+- 后端API: http://localhost:8000/api
 
 ## 🔧 配置说明
 
