@@ -114,7 +114,8 @@
   analysis / chat）与 `backend/api/rag_api.py`，服务层在 `backend/services/`。
   它使用相对导入（`from api.routes import ...`），需要在 `backend/` 目录下启动：
   `cd backend && uvicorn main:app --reload --port 8000`
-- **数据库**: SQLite + SQLAlchemy
+- **数据层**：SQLAlchemy 2（`backend/services/database.py`）只在 FastAPI 后端一侧使用；
+  Flask 单体本身不落库，直接透传腾讯/新浪/东方财富等上游接口，知识库是 `RAG_datasets/` 下的本地 JSON
 - **AI服务**: 智谱AI GLM（可选 OpenAI / 通义千文 / 文心一言 / 讯飞星火）
 - **数据源**: 腾讯股票 API、新浪财经 API、东方财富 API、BaoStock
 - **检索**: `RAG_datasets/` 下的本地 JSON 知识库（`services/rag_service.py`）；
@@ -129,7 +130,7 @@
 
 ### 部署架构
 ```
-浏览器 (静态页面 + ECharts) ↔ Flask :8000 (/api + 静态资源) ↔ 数据层 (SQLite + 本地 RAG 知识库)
+浏览器 (静态页面 + ECharts) ↔ Flask :8000 (/api + 静态资源) ↔ 上游行情/新闻 API + 本地 RAG 知识库
                                   ↕
                           AI 服务（智谱AI 等）
                                   ↕
@@ -229,8 +230,7 @@ XUNFEI_API_SECRET=your_xunfei_secret
 
 - [智谱AI](https://open.bigmodel.cn/) - 提供强大的AI模型支持
 - [FastAPI](https://fastapi.tiangolo.com/) - 现代化的Web框架
-- [ElasticSearch](https://www.elastic.co/) - 强大的搜索引擎
-- [Vue.js](https://vuejs.org/) - 渐进式JavaScript框架
+- [ElasticSearch](https://www.elastic.co/) - 预留的检索后端（代码已就位，尚未接入）
 
 ---
 
