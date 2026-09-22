@@ -3,6 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-latest-green.svg)](https://fastapi.tiangolo.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://img.shields.io/github/actions/workflow/status/Eric-YHS/CWZX/ci.yml?branch=master&logo=githubactions&logoColor=white&label=CI)](https://github.com/Eric-YHS/CWZX/actions/workflows/ci.yml)
 
 财闻智析是一个集成了实时股票数据、智能分析、AI助手和RAG知识库的综合性金融信息平台。通过多源数据整合和AI技术，为用户提供全面、准确、及时的金融信息服务。
 

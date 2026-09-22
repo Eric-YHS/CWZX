@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 后端依赖里包含 baostock / elasticsearch / zhipuai 等重型包，
+      # 这里只保证语法与配置正确，不安装依赖也不联网调用行情接口
+      - name: Byte-compile backend and services
+        run: |
+          python -m compileall -q backend services utils ai_service.py \
+            real_stock_service.py complete_start.py start_app.py 前端-main/UI/server.py
+
+      - name: .env.example must document every environment variable the code reads
+        run: |
+          python - <<'PY'
+          import pathlib, re, sys
+
+          example = pathlib.Path(".env.example").read_text(encoding="utf-8")
+          documented = set(re.findall(r"^([A-Z][A-Z0-9_]*)=", example, re.M))
+
+          used = set()
+          for path in list(pathlib.Path("backend").rglob("*.py")) + \
+                     list(pathlib.Path("services").rglob("*.py")) + \
+                     list(pathlib.Path("utils").rglob("*.py")) + [
+                         pathlib.Path("ai_service.py"), pathlib.Path("real_stock_service.py"),
+                         pathlib.Path("complete_start.py"), pathlib.Path("start_app.py"),
+                     ]:
+              if not path.is_file():
+                  continue
+              text = path.read_text(encoding="utf-8", errors="ignore")
+              used |= set(re.findall(r"os\.(?:getenv|environ\.get)\(\s*[\"']([A-Z][A-Z0-9_]*)[\"']", text))
+              used |= set(re.findall(r"os\.environ\[\s*[\"']([A-Z][A-Z0-9_]*)[\"']\s*\]", text))
+
+          missing = sorted(used - documented)
+          if missing:
+              sys.exit("这些环境变量代码里在用，但 .env.example 没有列出：" + ", ".join(missing))
+          print(f"ok: 代码使用的 {len(used)} 个环境变量在 .env.example 中都有说明")
+          PY
+
+      - name: No local env file or secret committed
+        run: |
+          set -euo pipefail
+          if git ls-files | grep -qx ".env"; then
+            echo "::error::.env 不应该入库，请只提交 .env.example"; exit 1
+          fi
+          # 真实的第三方 Key 一般是 32 位以上、含点的十六进制串（智谱）或 sk- 前缀（OpenAI）
+          if git grep -nIE "sk-[A-Za-z0-9]{20,}|[0-9a-f]{32}\.[0-9a-f]{8}" -- \
+              '*.py' '*.js' '*.html' '*.json' ':!RAG_datasets' >/tmp/secret-hits.txt 2>/dev/null; then
+            echo "::error::疑似把真实密钥写进了代码："
+            cat /tmp/secret-hits.txt
+            exit 1
+          fi
